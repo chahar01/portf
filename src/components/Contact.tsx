@@ -27,28 +27,46 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      contactSchema.parse(formData);
-      
-      toast({
-        title: "Message sent successfully!",
-        description: "Thank you for reaching out. I'll get back to you soon.",
-      });
-      
-      setFormData({ name: "", email: "", message: "" });
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        toast({
-          title: "Validation Error",
-          description: error.errors[0].message,
-          variant: "destructive",
-        });
-      } else {
-        toast({
-          title: "Error sending message",
-          description: "Please try again later or contact directly via email.",
-          variant: "destructive",
-        });
-      }
+     contactSchema.parse(formData);
+
+     const response = await fetch("https://api.web3forms.com/submit", {
+     method: "POST",
+     headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify({
+      access_key: "8331c081-de90-4d12-85d6-6efdf2ac2d35",
+      name: formData.name,
+      email: formData.email,
+      message: formData.message,
+      subject: "Portfolio Contact Form",
+    }),
+   });
+
+  const result = await response.json();
+
+  if (result.success) {
+    toast({
+      title: "Message Sent!",
+      description: "Thank you for contacting me.",
+    });
+
+    setFormData({
+      name: "",
+      email: "",
+      message: "",
+    });
+  } else {
+    throw new Error("Failed");
+  }
+} catch (error) {
+  toast({
+    title: "Error",
+    description: "Unable to send message.",
+    variant: "destructive",
+  });
+}
     } finally {
       setIsSubmitting(false);
     }
