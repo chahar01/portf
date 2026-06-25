@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Github, Linkedin, Mail } from "lucide-react";
-
+import profileImage from "@/assets/Rahul.jpg";
 const Hero = () => {
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -54,7 +54,7 @@ const Hero = () => {
             <div className="relative z-10">
               <div className="w-full max-w-md mx-auto aspect-square rounded-full overflow-hidden border-8 border-background shadow-medium bg-gradient-primary p-2 flex items-center justify-center">
                 <img 
-                  src="https://i.postimg.cc/gcHPQ8Yq/IMG20251028141302.jpg" 
+                  src={profileImage} 
                   alt="Rahul Kumar - Cyber Security Analyst" 
                   className="w-full h-full object-contain rounded-full"
                 />
