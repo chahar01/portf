@@ -56,7 +56,7 @@ const Hero = () => {
                 <img 
                   src={profileImage} 
                   alt="Rahul Kumar - Cyber Security Analyst" 
-                  className="w-full h-full object-contain rounded-full"
+                  className="w-full h-full object-cover object-top rounded-full"
                 />
               </div>
             </div>
