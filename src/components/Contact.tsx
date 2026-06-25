@@ -23,36 +23,61 @@ const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
+  e.preventDefault();
+  setIsSubmitting(true);
 
-    try {
-      contactSchema.parse(formData);
-      
+  try {
+    contactSchema.parse(formData);
+
+    const response = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        access_key: "8331c081-de90-4d12-85d6-6efdf2ac2d35",
+        name: formData.name,
+        email: formData.email,
+        message: formData.message,
+        subject: "New Portfolio Contact",
+      }),
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
       toast({
-        title: "Message sent successfully!",
-        description: "Thank you for reaching out. I'll get back to you soon.",
+        title: "Message Sent!",
+        description: "Thank you for contacting me. I'll get back to you soon.",
       });
-      
-      setFormData({ name: "", email: "", message: "" });
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        toast({
-          title: "Validation Error",
-          description: error.errors[0].message,
-          variant: "destructive",
-        });
-      } else {
-        toast({
-          title: "Error sending message",
-          description: "Please try again later or contact directly via email.",
-          variant: "destructive",
-        });
-      }
-    } finally {
-      setIsSubmitting(false);
+
+      setFormData({
+        name: "",
+        email: "",
+        message: "",
+      });
+    } else {
+      throw new Error(result.message || "Failed to send message");
     }
-  };
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      toast({
+        title: "Validation Error",
+        description: error.errors[0].message,
+        variant: "destructive",
+      });
+    } else {
+      toast({
+        title: "Error",
+        description: "Unable to send your message.",
+        variant: "destructive",
+      });
+    }
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
   const contactInfo = [
     {
