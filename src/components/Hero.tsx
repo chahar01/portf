@@ -52,13 +52,13 @@ const Hero = () => {
           
           <div className="relative animate-slide-up">
             <div className="relative z-10">
-              <div className="relative w-96 h-96 mx-auto rounded-full overflow-hidden border-[8px] border-white shadow-2xl">
-  <img
-    src={profileImage}
-    alt="Rahul Kumar - Cyber Security Analyst"
-    className="w-full h-full object-cover object-top"
-  />
-</div>
+              <div className="w-full max-w-md mx-auto aspect-square rounded-full overflow-hidden border-8 border-background shadow-medium bg-gradient-primary p-2 flex items-center justify-center">
+                <img 
+                  src={profileImage} 
+                  alt="Rahul Kumar - Cyber Security Analyst" 
+                  className="w-full h-full object-cover object-centre rounded-full"
+                />
+              </div>
             </div>
             {/* Decorative elements */}
             <div className="absolute -top-6 -right-6 w-24 h-24 bg-accent rounded-2xl rotate-12 opacity-80 animate-float"></div>
